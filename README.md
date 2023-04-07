@@ -32,7 +32,7 @@ if you return `POLL_RATE_CUSTOM` from the `computePollType` method, then you mus
 ### poll method
 Within this method, you must type the code that you wish to run repeatedly.
 
-Here is an example that uses 10 threads to transfer the data from a queue called `data` to another called `trash`:
+Here is an example that uses `10 threads` to transfer data from a `queue` called `data` to another called `trash`:
 
 ```Java
       
@@ -58,7 +58,7 @@ Here is an example that uses 10 threads to transfer the data from a queue called
   p.startPolling();
 ```
 
-To run it at a custom rate of 250 milliseconds, do:
+To run it at a custom rate of `250 milliseconds`, do:
 
 ```Java
       
@@ -90,8 +90,8 @@ To run it at a custom rate of 250 milliseconds, do:
 ```
 
 ## setMaxPolls method
-Sometimes you want the Poller to poll a certain number of times and then exit. This is where the `setMaxPolls` method is priceless.
-There are no hard guarantees here too. But the Poller will begin trying to shutdown all tasks once it has reached the `maxPolls` figure.
+Sometimes you want the `Poller` to poll a certain number of times and then exit. This is where the `setMaxPolls` method is priceless.
+There are no hard guarantees here too. But the `Poller` will begin trying to shutdown all tasks once it has reached the `maxPolls` figure.
 
 To do this, call
 

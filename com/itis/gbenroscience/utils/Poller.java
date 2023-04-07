@@ -153,7 +153,7 @@ public abstract class Poller implements Runnable {
     /**
      * Run this code before the poll starts
      */
-    public void beforePoll(){};
+    public void beforePoll(){}
 
     /**
      * The code to run repeatedly
@@ -163,7 +163,7 @@ public abstract class Poller implements Runnable {
     /**
      * Run this code after the poll ends
      */
-    public abstract void afterPoll();
+    public void afterPoll(){}
 
     public void run() {
         Thread t = Thread.currentThread();

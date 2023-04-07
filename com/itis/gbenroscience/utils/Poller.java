@@ -74,7 +74,7 @@ public abstract class Poller implements Runnable {
         return 5000L;
     }
 
-    public void setPollType(int pollType) {
+    private void setPollType(int pollType) {
         this.pollType = pollType;
     }
 

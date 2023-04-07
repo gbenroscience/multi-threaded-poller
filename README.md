@@ -1,5 +1,8 @@
 # multi-threaded-poller
-A simple and powerful Java class that implements polling with a configurable number of threads
+A simple and powerful Java class that implements polling with a configurable number of threads.
+
+### NOTE
+There are no hard time guarantees, but the `Poller` will start with the supplied number of threads and run repeated tasks on each thread at the specified rate as much as the hardware/os/JVM can guarantee.
 
 ## Usage
 You only need to implement 2 methods to use this class to perform repeated tasks, such as **polling a database**, **polling an API**, **running an animation** etc.
@@ -29,7 +32,7 @@ if you return `POLL_RATE_CUSTOM` from the `computePollType` method, then you mus
 ### poll method
 Within this method, you must type the code that you wish to run repeatedly.
 
-Here is an example:
+Here is an example that uses 10 threads to transfer the data from a queue called `data` to another called `trash`:
 
 ```Java
       
@@ -55,7 +58,7 @@ Here is an example:
   p.startPolling();
 ```
 
-To run it at a custom rate in milliseconds, do:
+To run it at a custom rate of 250 milliseconds, do:
 
 ```Java
       
@@ -85,3 +88,44 @@ To run it at a custom rate in milliseconds, do:
         };
   p.startPolling();
 ```
+
+## setMaxPolls method
+Sometimes you want the Poller to poll a certain number of times and then exit. This is where the `setMaxPolls` method is priceless.
+There are no hard guarantees here too. But the Poller will begin trying to shutdown all tasks once it has reached the `maxPolls` figure.
+
+To do this, call
+
+```Java
+      
+        Poller p = new Poller(10) {
+            private ConcurrentLinkedQueue<String> data = new ConcurrentLinkedQueue<>();
+            private ConcurrentLinkedQueue<String> trash = new ConcurrentLinkedQueue<>();
+
+            @Override
+            protected int computePollType() {
+                return POLL_RATE_CUSTOM;
+            }
+
+            @Override
+            public long getCustomPollRateMs() {
+               return 250L;
+            }
+            
+            @Override
+            public void poll() {
+                String polled = data.poll();
+                if (polled != null) {
+                    trash.add(polled);
+                } else {
+                    stopPolling();
+                }
+            }
+        };
+  p.setMaxPolls(1800);
+  p.startPolling();
+```
+
+The above `Poller` will start rounding up its tasks once it has executed `1800` polls.
+
+
+

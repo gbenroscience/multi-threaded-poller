@@ -52,5 +52,36 @@ Here is an example:
                 }
             }
         };
+  p.startPolling();
+```
 
+To run it at a custom rate in milliseconds, do:
+
+```Java
+      
+        Poller p = new Poller(10) {
+            private ConcurrentLinkedQueue<String> data = new ConcurrentLinkedQueue<>();
+            private ConcurrentLinkedQueue<String> trash = new ConcurrentLinkedQueue<>();
+
+            @Override
+            protected int computePollType() {
+                return POLL_RATE_CUSTOM;
+            }
+
+            @Override
+            public long getCustomPollRateMs() {
+               return 250L;
+            }
+            
+            @Override
+            public void poll() {
+                String polled = data.poll();
+                if (polled != null) {
+                    trash.add(polled);
+                } else {
+                    stopPolling();
+                }
+            }
+        };
+  p.startPolling();
 ```

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.itis.liveservice.utils;
+package com.itis.gbenroscience.utils;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -153,12 +153,12 @@ public abstract class Poller implements Runnable {
     /**
      * Run this code before the poll starts
      */
-    public abstract void beforePoll();
+    public void beforePoll(){};
 
     /**
      * The code to run repeatedly
      */
-    public abstract void poll();
+    public void poll(){};
 
     /**
      * Run this code after the poll ends

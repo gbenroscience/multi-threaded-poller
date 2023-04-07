@@ -7,7 +7,7 @@ package com.itis.gbenroscience.utils;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicInteger;
-
+ 
 /**
  *
  * @author JIBOYE, Oluwagbemiro Olaoluwa <gbenroscience@yahoo.com>
@@ -41,7 +41,10 @@ public abstract class Poller implements Runnable {
     private Thread[] runners;
 
     private boolean switchOff;
-
+/**
+ * Create a new multi-threaded Poller
+ * @param numOfThreads The number of threads to use in the Poller
+ */
     public Poller(int numOfThreads) {
         runners = new Thread[numOfThreads];
         for (int i = 0; i < runners.length; i++) {
@@ -73,11 +76,7 @@ public abstract class Poller implements Runnable {
     public long getCustomPollRateMs() {
         return 5000L;
     }
-
-    private void setPollType(int pollType) {
-        this.pollType = pollType;
-    }
-
+ 
     public int getPollType() {
         return pollType;
     }
@@ -119,7 +118,7 @@ public abstract class Poller implements Runnable {
      */
     private long getRate() {
 
-        setPollType(computePollType());
+        this.pollType = computePollType();
 
         switch (pollType) {
             case POLL_RATE_DRAGGY:
@@ -153,7 +152,7 @@ public abstract class Poller implements Runnable {
     /**
      * Run this code before the poll starts
      */
-    public void beforePoll(){}
+    public void beforePoll(){};
 
     /**
      * The code to run repeatedly
@@ -163,8 +162,7 @@ public abstract class Poller implements Runnable {
     /**
      * Run this code after the poll ends
      */
-    public void afterPoll(){}
- 
+    public void afterPoll(){};
 
     public void run() {
         Thread t = Thread.currentThread();
@@ -193,7 +191,7 @@ public abstract class Poller implements Runnable {
                 break;
             }
         }
-    }    
+    }
 
     public static void main(String[] args) {
 

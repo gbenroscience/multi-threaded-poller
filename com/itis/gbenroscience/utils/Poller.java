@@ -164,6 +164,7 @@ public abstract class Poller implements Runnable {
      * Run this code after the poll ends
      */
     public void afterPoll(){}
+ 
 
     public void run() {
         Thread t = Thread.currentThread();
@@ -182,8 +183,9 @@ public abstract class Poller implements Runnable {
                 }
                 poll();
                 incrementPolls();
-                if (pollType != POLL_RATE_UNLIMITED) {
-                    Thread.sleep(getRate());
+                long rate = getRate();
+                if (pollType != POLL_RATE_UNLIMITED || rate > 0) {
+                    Thread.sleep(rate);
                 }
             } catch (InterruptedException e) {
                 System.err.println("Stop signal detected... Closing Workers");
@@ -191,7 +193,7 @@ public abstract class Poller implements Runnable {
                 break;
             }
         }
-    }
+    }    
 
     public static void main(String[] args) {
 

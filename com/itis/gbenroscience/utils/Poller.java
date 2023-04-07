@@ -157,7 +157,7 @@ public abstract class Poller implements Runnable {
     /**
      * The code to run repeatedly
      */
-    public void poll(){};
+    public abstract void poll(){};
 
     /**
      * Run this code after the poll ends
